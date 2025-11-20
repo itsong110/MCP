@@ -68,7 +68,15 @@ ${content}
       },
     })
 
-    const summary = response.text.trim()
+    const summaryText = response.text
+    if (!summaryText) {
+      return NextResponse.json(
+        { error: 'Failed to generate summary: empty response' },
+        { status: 500 }
+      )
+    }
+
+    const summary = summaryText.trim()
 
     // DB에 요약 저장
     const updatedMemo = await updateMemoSummary(memoId, summary)

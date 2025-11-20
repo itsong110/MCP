@@ -31,7 +31,6 @@ export default function MemoViewerModal({
   const [summary, setSummary] = useState<string | null>(null)
   const [summaryLoading, setSummaryLoading] = useState(false)
   const [summaryError, setSummaryError] = useState<string | null>(null)
-  const summaryCacheRef = useRef<Record<string, string>>({})
   const currentMemoIdRef = useRef<string | null>(null)
 
   useEffect(() => {
@@ -106,7 +105,7 @@ export default function MemoViewerModal({
     }
 
     fetchSummary()
-  }, [isOpen, memo])
+  }, [isOpen, memo, onMemoUpdated])
 
   useEffect(() => {
     if (!isOpen) return

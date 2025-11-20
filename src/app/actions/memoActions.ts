@@ -4,8 +4,20 @@ import { createServerClient } from '@/lib/supabase/server'
 import { Memo, MemoFormData } from '@/types/memo'
 import { revalidatePath } from 'next/cache'
 
+// DB 스키마 타입 정의
+interface DbMemoRow {
+  id: string
+  title: string
+  content: string
+  category: string
+  tags: string[] | null
+  summary: string | null
+  created_at: string
+  updated_at: string
+}
+
 // DB 스키마를 Memo 인터페이스로 변환
-function dbToMemo(row: any): Memo {
+function dbToMemo(row: DbMemoRow): Memo {
   return {
     id: row.id,
     title: row.title,
@@ -18,12 +30,21 @@ function dbToMemo(row: any): Memo {
   }
 }
 
+// DB 스키마 데이터 타입 정의
+interface DbMemoData {
+  title: string
+  content: string
+  category: string
+  tags: string[]
+  summary: string | null
+}
+
 // Memo 인터페이스를 DB 스키마로 변환
-function memoToDb(memo: Partial<Memo>): any {
+function memoToDb(memo: Partial<Memo>): DbMemoData {
   return {
-    title: memo.title,
-    content: memo.content,
-    category: memo.category,
+    title: memo.title!,
+    content: memo.content!,
+    category: memo.category!,
     tags: memo.tags || [],
     summary: memo.summary || null,
   }
