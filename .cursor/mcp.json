@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "context7": {
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {}
+    },
+    "supabase": {
+      "url": "https://mcp.supabase.com/mcp?project_ref=niqybhqkmtkojnifgirz"
+    }
+  }
+}
