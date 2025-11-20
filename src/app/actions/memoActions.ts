@@ -53,6 +53,12 @@ function memoToDb(memo: Partial<Memo>): DbMemoData {
 // 모든 메모 가져오기
 export async function getMemos(): Promise<Memo[]> {
   try {
+    // 환경 변수가 없으면 빈 배열 반환 (빌드 시점 대응)
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      console.warn('Supabase environment variables not configured, returning empty array')
+      return []
+    }
+
     const supabase = createServerClient()
     const { data, error } = await supabase
       .from('memos')
@@ -74,6 +80,12 @@ export async function getMemos(): Promise<Memo[]> {
 // 특정 메모 가져오기
 export async function getMemoById(id: string): Promise<Memo | null> {
   try {
+    // 환경 변수가 없으면 null 반환 (빌드 시점 대응)
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      console.warn('Supabase environment variables not configured')
+      return null
+    }
+
     const supabase = createServerClient()
     const { data, error } = await supabase
       .from('memos')
