@@ -5,6 +5,17 @@ import { Memo, MemoFormData } from '@/types/memo'
 import { revalidatePath } from 'next/cache'
 
 // DB 스키마 타입 정의
+const hasSupabaseEnv = () => {
+  const supabaseUrl =
+    process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.SUPABASE_ANON_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  return Boolean(supabaseUrl && supabaseKey)
+}
+
 interface DbMemoRow {
   id: string
   title: string
@@ -54,7 +65,7 @@ function memoToDb(memo: Partial<Memo>): DbMemoData {
 export async function getMemos(): Promise<Memo[]> {
   try {
     // 환경 변수가 없으면 빈 배열 반환 (빌드 시점 대응)
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    if (!hasSupabaseEnv()) {
       console.warn('Supabase environment variables not configured, returning empty array')
       return []
     }
@@ -81,7 +92,7 @@ export async function getMemos(): Promise<Memo[]> {
 export async function getMemoById(id: string): Promise<Memo | null> {
   try {
     // 환경 변수가 없으면 null 반환 (빌드 시점 대응)
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    if (!hasSupabaseEnv()) {
       console.warn('Supabase environment variables not configured')
       return null
     }

@@ -42,14 +42,19 @@ npm install
 # Google Gemini API Key
 GEMINI_API_KEY=your_gemini_api_key
 
-# Supabase Configuration
+# Supabase Configuration (Server)
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Supabase Configuration (Client exposure)
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
 **Supabase 프로젝트 설정:**
 1. [Supabase](https://supabase.com)에서 새 프로젝트 생성
-2. 프로젝트 설정 > API에서 URL과 Anon Key 복사
+2. 프로젝트 설정 > API에서 URL, Anon Key, Service Role Key 복사
 3. Supabase CLI로 프로젝트 연결: `supabase link`
 
 ### 3. 데이터베이스 마이그레이션
